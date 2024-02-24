@@ -14,15 +14,15 @@
                     <TextBlock Text="Авторизация" FontSize="25" Margin="0 0 0 10"/>
                     <TextBox md:HintAssist.Hint="Логин" Name="LoginInputVhodBox"/>
                     <TextBox md:HintAssist.Hint="Пароль" Name="PasswordInputVhodBox" Margin="0 10 0 5"/>
-                    <Button Content="Войти" Margin="0 10 0 0"/>
+                    <Button Content="Войти" Margin="0 10 0 0" Click="Vhod_Click"/>
                 </StackPanel>
             </TabItem>
             <TabItem Header="Регистрация">
                 <StackPanel Width="300" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <TextBlock Text="Регистрация" FontSize="25" Margin="0 0 0 10"/>
                     <TextBox  md:HintAssist.Hint="Логин" Name="LoginInputRegBox"/>
-                    <TextBox  md:HintAssist.Hint="Пароль" Name="SignUpPasswordInputRegBox" Margin="0 10 0 5"/>
-                    <Button Content="Зарегистрироваться" Margin="0 10 0 0"/>
+                    <TextBox  md:HintAssist.Hint="Пароль" Name="PasswordInputRegBox" Margin="0 10 0 5"/>
+                    <Button Content="Зарегистрироваться" Margin="0 10 0 0" Click="Registeciiy_Click"/>
                 </StackPanel>
             </TabItem>
         </TabControl>
