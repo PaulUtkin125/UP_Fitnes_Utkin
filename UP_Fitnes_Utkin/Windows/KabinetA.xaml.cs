@@ -13,13 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using UP_Fitnes_Utkin.Data;
 using UP_Fitnes_Utkin.Model;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace UP_Fitnes_Utkin.Windows
 {
     /// <summary>
     /// Логика взаимодействия для KabinetA.xaml
     /// </summary>
-    public partial class KabinetA : Window
+    public partial class KabinetA : System.Windows.Window
     {
         private readonly User? _user = null;
 
@@ -31,25 +32,30 @@ namespace UP_Fitnes_Utkin.Windows
 
             Koshelek.Text = _user.Money.ToString() + " ₽";
 
-           
+
             using (var context = new DbContact())
             {
-                StackPanel stackPanel = KatalogSpisok;
+                ScrollViewer scrollViewer = KatalogSpisok;
+                StackPanel stackPanel = new StackPanel();
+
+                
 
                 foreach (var item in context.kategorTovaras)
                 {
                     RadioButton radioButton = new RadioButton();
                     radioButton.GroupName = "re";
                     radioButton.IsChecked = false;
-
                     TextBlock textBlock = new TextBlock();
                     textBlock.Text = item.Name;
                     textBlock.TextWrapping = TextWrapping.Wrap;
                     textBlock.FontSize = 18;
+                    textBlock.VerticalAlignment = VerticalAlignment.Top;
                     radioButton.Content = textBlock;
 
                     stackPanel.Children.Add(radioButton);
                 }
+                scrollViewer.Content = stackPanel;
+                
 
             }
             

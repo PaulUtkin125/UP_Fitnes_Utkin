@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:UP_Fitnes_Utkin.Windows"
         mc:Ignorable="d"
          xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Title="KabinetA" Height="450" Width="800" Background="LightBlue" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="KabinetA" Height="470" Width="800" Background="LightBlue" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <StackPanel>
             <StackPanel Orientation="Horizontal" Margin="10 10" HorizontalAlignment="Right">
@@ -32,16 +32,21 @@
                 </StackPanel>
             </StackPanel>
             <StackPanel Height="3" Background="Gray"/>
-            <StackPanel Orientation="Horizontal" Height="355">
+            <StackPanel Orientation="Horizontal" Height="378">
                 <StackPanel Width="150" Margin="10 0 0 0">
                     <TextBlock Text="Каталог" FontSize="20"/>
-                    <StackPanel x:Name="KatalogSpisok">
-                        
-                    </StackPanel>
-                    <!--<RadioButton GroupName="kategoriiy" IsChecked="False">
-                        <TextBlock Text="Спортивное питание" FontSize="18" TextWrapping="Wrap"/>
-                    </RadioButton>-->
                     
+                    <ScrollViewer x:Name="KatalogSpisok" Height="230">
+                        <RadioButton GroupName="re" IsChecked="False" VerticalAlignment="Top">
+                            <TextBlock Text="Все товары" FontSize="18" TextWrapping="Wrap"/>
+                        </RadioButton>
+                    </ScrollViewer>
+                    <TextBlock Text="Добавить:" FontSize="18" Margin="0 10"/>
+                    <ComboBox Width="150" Name="boxVub" FontSize="15" md:HintAssist.Hint="Не выбран">
+                        <ComboBoxItem Content="Товар"/>
+                        <ComboBoxItem Content="Категория товара"/>
+                        <ComboBoxItem Content="Не выбран"/>
+                    </ComboBox>
                 </StackPanel>
                 <StackPanel Width="3" Background="Gray"/>
                 <WrapPanel Width="635" Orientation="Horizontal" x:Name="SpisokTovarov">
