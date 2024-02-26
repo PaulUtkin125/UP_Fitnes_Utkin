@@ -11,6 +11,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using UP_Fitnes_Utkin.Data;
 using UP_Fitnes_Utkin.Model;
+using UP_Fitnes_Utkin.Windows;
 
 namespace UP_Fitnes_Utkin
 {
@@ -39,10 +40,21 @@ namespace UP_Fitnes_Utkin
 
             using (var context = new DbContact())
             {
-                var userExists = context.users.SingleOrDefault(x => x.Login == Login_ && x.Password == Password_);
-                if (userExists is not null)
+                var user = context.users.SingleOrDefault(x => x.Login == Login_ && x.Password == Password_);
+                if (user is not null)
                 {
-
+                    if (user.RoleId == 2) // админ
+                    {
+                        KabinetA kabinetA = new KabinetA(user);
+                        kabinetA.Show();
+                        this.Close();
+                    }
+                    if (user.RoleId == 1) 
+                    {
+                        KabinetUser kabinetUser = new KabinetUser(user);
+                        kabinetUser.Show();
+                        this.Close();
+                    }
                     return;
                 }
             }
@@ -62,7 +74,7 @@ namespace UP_Fitnes_Utkin
                 return;
             }
 
-            var user = new User() {Login = Login_, Password = Password_, RoleId = 1 };
+            var user = new User() {Login = Login_, Password = Password_, RoleId = 1, Money = 0.0 };
             using (var context = new DbContact()) 
             {
                 var userExists = context.users.SingleOrDefault(x => x.Login == Login_);

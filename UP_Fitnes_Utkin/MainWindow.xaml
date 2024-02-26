@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:UP_Fitnes_Utkin"
         mc:Ignorable="d"
         xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Title="Вход" Height="350" Width="500" FontSize="17" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="Вход" Height="350" Width="500" FontSize="17" Background="LightBlue" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <TabControl>
             <TabItem Header="Авторизация">

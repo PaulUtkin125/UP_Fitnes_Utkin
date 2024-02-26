@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace UP_Fitnes_Utkin.Model
 {
-    public class Rol
+    class KategorTovara
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
     }
 }

@@ -1,0 +1,53 @@
+﻿<Window x:Class="UP_Fitnes_Utkin.Windows.KabinetA"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UP_Fitnes_Utkin.Windows"
+        mc:Ignorable="d"
+         xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="KabinetA" Height="450" Width="800" Background="LightBlue" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="10 10" HorizontalAlignment="Right">
+                <StackPanel Width="500" Margin="0 0 40 0">
+                    <TextBlock Width="490" Text="Здесь могла быть Ваша реклама" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15"/>
+                </StackPanel>
+                <StackPanel Margin="0 0 20 0" Cursor="">
+                    <TextBlock Text="Кошелек:" FontSize="20" HorizontalAlignment="Center"/>
+                    <TextBlock FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="35 0 0 0" Width="100" Name="Koshelek"/>
+                    <StackPanel.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Пополнить" Click="KoshelPopoln_Click">
+                                <TextBox Width="100" Name="KoshelInputBox"/>
+                            </MenuItem>
+                        </ContextMenu>
+                    </StackPanel.ContextMenu>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="10 1" HorizontalAlignment="Right" VerticalAlignment="Top" Cursor="">
+                    <Button Width="55" Height="50" Cursor="Hand" Click="Korzina_Click">
+                        <Image Source="C:\Users\П\source\repos\UP_Fitnes_Utkin\UP_Fitnes_Utkin\Image\korzina.png" Width="23" Height="23"/>
+                    </Button>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Height="3" Background="Gray"/>
+            <StackPanel Orientation="Horizontal" Height="355">
+                <StackPanel Width="150" Margin="10 0 0 0">
+                    <TextBlock Text="Каталог" FontSize="20"/>
+                    <StackPanel x:Name="KatalogSpisok">
+                        
+                    </StackPanel>
+                    <!--<RadioButton GroupName="kategoriiy" IsChecked="False">
+                        <TextBlock Text="Спортивное питание" FontSize="18" TextWrapping="Wrap"/>
+                    </RadioButton>-->
+                    
+                </StackPanel>
+                <StackPanel Width="3" Background="Gray"/>
+                <WrapPanel Width="635" Orientation="Horizontal" x:Name="SpisokTovarov">
+                    
+                </WrapPanel>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -21,6 +21,23 @@ namespace UP_Fitnes_Utkin.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("UP_Fitnes_Utkin.Model.KategorTovara", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("kategorTovaras");
+                });
+
             modelBuilder.Entity("UP_Fitnes_Utkin.Model.Rol", b =>
                 {
                     b.Property<int>("ID")
@@ -38,6 +55,34 @@ namespace UP_Fitnes_Utkin.Migrations
                     b.ToTable("Rol");
                 });
 
+            modelBuilder.Entity("UP_Fitnes_Utkin.Model.Tovar_Sklad", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CategID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Count_tekyshee")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name_tovar")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Price_sht")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategID");
+
+                    b.ToTable("tovar");
+                });
+
             modelBuilder.Entity("UP_Fitnes_Utkin.Model.User", b =>
                 {
                     b.Property<int>("ID")
@@ -49,6 +94,9 @@ namespace UP_Fitnes_Utkin.Migrations
                     b.Property<string>("Login")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Money")
+                        .HasColumnType("float");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -62,6 +110,17 @@ namespace UP_Fitnes_Utkin.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("users");
+                });
+
+            modelBuilder.Entity("UP_Fitnes_Utkin.Model.Tovar_Sklad", b =>
+                {
+                    b.HasOne("UP_Fitnes_Utkin.Model.KategorTovara", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("UP_Fitnes_Utkin.Model.User", b =>
