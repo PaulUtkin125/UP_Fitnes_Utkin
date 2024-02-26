@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:UP_Fitnes_Utkin.Windows"
         mc:Ignorable="d"
          xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Title="KabinetA" Height="470" Width="800" Background="LightBlue" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="KabinetA" Height="500" Width="800" Background="LightBlue" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <StackPanel>
             <StackPanel Orientation="Horizontal" Margin="10 10" HorizontalAlignment="Right">
@@ -31,23 +31,61 @@
                     </Button>
                 </StackPanel>
             </StackPanel>
+            
             <StackPanel Height="3" Background="Gray"/>
-            <StackPanel Orientation="Horizontal" Height="378">
+            <StackPanel Orientation="Horizontal" Height="408">
                 <StackPanel Width="150" Margin="10 0 0 0">
                     <TextBlock Text="Каталог" FontSize="20"/>
-                    
-                    <ScrollViewer x:Name="KatalogSpisok" Height="230">
-                        
-                    </ScrollViewer>
+
+                    <ScrollViewer x:Name="KatalogSpisok" Height="230"/>
                     <TextBlock Text="Добавить:" FontSize="18" Margin="0 10"/>
-                    <ComboBox Width="140" Name="boxVub" FontSize="15" Margin="0 0 10 0" md:HintAssist.Hint="Не выбран">
+                    <ComboBox Width="140" Name="boxVub" FontSize="15" Margin="0 0 10 0" md:HintAssist.Hint="Не выбран" SelectionChanged="boxVub_SelectionChanged">
                         <ComboBoxItem Content="Товар"/>
                         <ComboBoxItem Content="Категория товара"/>
                         <ComboBoxItem Content="Не выбран"/>
                     </ComboBox>
                 </StackPanel>
+                
                 <StackPanel Width="3" Background="Gray"/>
-                <WrapPanel Width="635" Orientation="Horizontal" x:Name="SpisokTovarov"/>
+                <ScrollViewer x:Name="SpisTov" Width="635" Height="400">
+                    <WrapPanel Width="630" Orientation="Horizontal" x:Name="SpisokTovarov" Visibility="Visible"/>
+                </ScrollViewer>
+                
+                
+                <StackPanel Width="635" Name="NewData" Visibility="Collapsed">
+                    <StackPanel Name="NewTovar" Visibility="Collapsed" Margin="10 10 0 0" Orientation="Horizontal">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Категория:" FontSize="15" VerticalAlignment="Center"/>
+                                <ComboBox FontSize="15" Margin="20 0 0 0" Width="100" Name="CategOutputBox"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Margin="0 10">
+                                <TextBlock Text="Цена:" FontSize="15" VerticalAlignment="Center"/>
+                                <TextBox Width="100" Margin="55 0 0 0" Name="CenaNewTovara"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Название:" FontSize="15" VerticalAlignment="Center"/>
+                                <TextBox Width="100" FontSize="15" Margin="25 0 0 0" Name="NameNewTovara"/>
+                            </StackPanel>
+                        </StackPanel>
+                        <StackPanel Margin="30 0 0 0" Visibility="Visible">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Кол-во:" FontSize="15" VerticalAlignment="Center"/>
+                                <TextBox Name="KolNewInputBox" Width="100" Margin="20 0 0 0"/>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Button Content="Выбрать" Click="VubratPhoto_Click"/>
+                                <Image Width="100" Height="100" Margin="10 10 0 0" x:Name="Photo"/>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                    
+                    <StackPanel Orientation="Horizontal" Name="NewCategor" Visibility="Collapsed" Margin="10 10 0 0" VerticalAlignment="Top">
+                        <TextBlock Text="Название категории:" FontSize="15" VerticalAlignment="Center"/>
+                        <TextBox FontSize="15" Name="NewCategInputBox" Width="150" Margin="20 0 0 0"/>
+                    </StackPanel>
+                    <Button Content="Сохранить" FontSize="18" Margin="0 50 0 0" VerticalAlignment="Top" Width="200" Click="VnestiDannue_Click"/>
+                </StackPanel>
             </StackPanel>
         </StackPanel>
     </Grid>
