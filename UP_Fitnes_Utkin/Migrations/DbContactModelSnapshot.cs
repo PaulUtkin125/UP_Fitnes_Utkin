@@ -73,6 +73,10 @@ namespace UP_Fitnes_Utkin.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Photo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<double>("Price_sht")
                         .HasColumnType("float");
 

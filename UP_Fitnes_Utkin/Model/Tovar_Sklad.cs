@@ -14,6 +14,7 @@ namespace UP_Fitnes_Utkin.Model
         public int CategID { get; set; }
         public int Count_tekyshee { get; set; }
         public double Price_sht { get; set; }
+        public string Photo {  get; set; }
 
     }
 }

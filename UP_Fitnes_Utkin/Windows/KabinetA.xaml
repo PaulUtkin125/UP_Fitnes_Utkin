@@ -37,21 +37,17 @@
                     <TextBlock Text="Каталог" FontSize="20"/>
                     
                     <ScrollViewer x:Name="KatalogSpisok" Height="230">
-                        <RadioButton GroupName="re" IsChecked="False" VerticalAlignment="Top">
-                            <TextBlock Text="Все товары" FontSize="18" TextWrapping="Wrap"/>
-                        </RadioButton>
+                        
                     </ScrollViewer>
                     <TextBlock Text="Добавить:" FontSize="18" Margin="0 10"/>
-                    <ComboBox Width="150" Name="boxVub" FontSize="15" md:HintAssist.Hint="Не выбран">
+                    <ComboBox Width="140" Name="boxVub" FontSize="15" Margin="0 0 10 0" md:HintAssist.Hint="Не выбран">
                         <ComboBoxItem Content="Товар"/>
                         <ComboBoxItem Content="Категория товара"/>
                         <ComboBoxItem Content="Не выбран"/>
                     </ComboBox>
                 </StackPanel>
                 <StackPanel Width="3" Background="Gray"/>
-                <WrapPanel Width="635" Orientation="Horizontal" x:Name="SpisokTovarov">
-                    
-                </WrapPanel>
+                <WrapPanel Width="635" Orientation="Horizontal" x:Name="SpisokTovarov"/>
             </StackPanel>
         </StackPanel>
     </Grid>
