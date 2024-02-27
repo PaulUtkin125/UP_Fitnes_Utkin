@@ -1,6 +1,8 @@
-﻿using System;
+﻿using MaterialDesignThemes.Wpf;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -122,7 +124,12 @@ namespace UP_Fitnes_Utkin.Windows
             KatalogVesi.Visibility = Visibility.Collapsed;
             KorzonaVsiy.Visibility = Visibility.Visible;
 
-
+            int counter = 0;
+            foreach (var item in KorzinaSpisok.Children)
+            {
+                if (item is StackPanel) counter++;
+            }
+            HintAssist.SetHint(KolTovObsh, $"Товары, {counter} шт.");
         }
 
         private void KoshelPopoln_Click(object sender, RoutedEventArgs e)
@@ -606,11 +613,20 @@ namespace UP_Fitnes_Utkin.Windows
 
         private void Nazad_Click(object sender, RoutedEventArgs e)
         {
+            KatalogVesi.Visibility = Visibility.Visible;
+            KorzonaVsiy.Visibility = Visibility.Collapsed;
+        }
+
+        private void Vuhod_Click(object sender, RoutedEventArgs e)
+        {
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
             this.Close();
         }
 
+        private void Kupit_Click(object sender, RoutedEventArgs e)
+        {
 
+        }
     }
 }
