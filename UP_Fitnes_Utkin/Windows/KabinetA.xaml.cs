@@ -15,9 +15,13 @@ using System.Windows.Shapes;
 using UP_Fitnes_Utkin.Data;
 using UP_Fitnes_Utkin.Model;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using Button = System.Windows.Controls.Button;
+using KeyEventArgs = System.Windows.Forms.KeyEventArgs;
 using MessageBox = System.Windows.Forms.MessageBox;
+using Orientation = System.Windows.Controls.Orientation;
 using Panel = System.Windows.Forms.Panel;
 using RadioButton = System.Windows.Controls.RadioButton;
+using TextBox = System.Windows.Controls.TextBox;
 
 namespace UP_Fitnes_Utkin.Windows
 {
@@ -84,6 +88,13 @@ namespace UP_Fitnes_Utkin.Windows
                     stackPanelTovar.Children.Add(image);
 
                     TextBlock textBlockNameTovar = new TextBlock();
+                    TextBlock blocIdtov = new TextBlock();
+                    blocIdtov.Text = item.Id.ToString();
+                    blocIdtov.Visibility = Visibility.Collapsed;
+                    blocIdtov.Name = "Id";
+                    stackPanelTovar.Children.Add(blocIdtov);
+
+
                     textBlockNameTovar.Text = item.Name_tovar;
                     textBlockNameTovar.FontSize = 18;
                     stackPanelTovar.Children.Add(textBlockNameTovar);
@@ -108,6 +119,9 @@ namespace UP_Fitnes_Utkin.Windows
 
         private void Korzina_Click(object sender, RoutedEventArgs e)
         {
+            KatalogVesi.Visibility = Visibility.Collapsed;
+            KorzonaVsiy.Visibility = Visibility.Visible;
+
 
         }
 
@@ -131,12 +145,121 @@ namespace UP_Fitnes_Utkin.Windows
                 context.SaveChanges();
 
                 Koshelek.Text = user.Money.ToString() + " ₽";
-                KoshelInputBox = "";
+                KoshelInputBox.Text = "";
             }
         }
         private void Vubor_Click(object sender, RoutedEventArgs e)
         {
-            
+            Button button = sender as Button;
+            if (button != null) 
+            { 
+                StackPanel block = button.Parent as StackPanel;
+                if (block != null) 
+                {
+                    foreach (var children in block.Children)
+                    {
+                        if (children is TextBlock blocIdtov) 
+                        {
+                            if (children is TextBlock text)
+                            {
+                                if (text.Name == "Id")
+                                {
+                                    int IdTov = int.Parse(text.Text);
+                                    TextBox textBoxKolTovara = new TextBox();
+                                    TextBlock textPrise = new TextBlock();
+                                    
+                                    using (var context = new DbContact())
+                                    {
+                                        var DbTovar = context.tovar.Find(IdTov);
+                                        StackPanel panelKorzonaStroka = new StackPanel();
+                                        panelKorzonaStroka.Name = "Id" + DbTovar.Id.ToString();
+                                        StackPanel panelKolRed = new StackPanel();
+                                        StackPanel PrisePanel = new StackPanel();
+                                        panelKorzonaStroka.Orientation = Orientation.Horizontal;
+                                        panelKolRed.Orientation = Orientation.Horizontal;
+
+                                        BitmapImage bitmapImage = new BitmapImage(new Uri(DbTovar.Photo));
+                                        Image image1 = new Image();
+                                        image1.Source = bitmapImage;
+                                        image1.Width = 100;
+                                        image1.Height = 100;
+                                        panelKorzonaStroka.Children.Add(image1);
+
+                                        TextBlock textBlock1 = new TextBlock();
+                                        textBlock1.Text = DbTovar.Name_tovar;
+                                        textBlock1.Width = 150;
+                                        textBlock1.VerticalAlignment = VerticalAlignment.Top;
+                                        textBlock1.FontSize = 18;
+                                        textBlock1.TextWrapping = TextWrapping.Wrap;
+                                        panelKorzonaStroka.Children.Add(textBlock1);
+
+
+                                        Button buttonYmensh = new Button();
+                                        buttonYmensh.Width = 45;
+                                        buttonYmensh.Height = 28;
+                                        buttonYmensh.Content = "-";
+                                        buttonYmensh.VerticalContentAlignment = VerticalAlignment.Center;
+                                        buttonYmensh.FontSize = 18;
+                                        buttonYmensh.VerticalAlignment = VerticalAlignment.Center;
+                                        buttonYmensh.Click += (sender, e) =>
+                                        {
+                                            textBoxKolTovara.Text = (int.Parse(textBoxKolTovara.Text) - 1).ToString();
+                                            textPrise.Text = (DbTovar.Price_sht * int.Parse(textBoxKolTovara.Text.Replace(" ₽", ""))).ToString() + " ₽";
+                                            if (int.Parse(textBoxKolTovara.Text) == 0) KorzinaSpisok.Children.Remove(panelKorzonaStroka);
+                                        };
+                                        panelKolRed.Children.Add(buttonYmensh);
+
+
+                                        textBoxKolTovara.Width = 50;
+                                        textBoxKolTovara.FontSize = 20;
+                                        textBoxKolTovara.Text = "1";
+                                        textBoxKolTovara.VerticalAlignment = VerticalAlignment.Center;
+                                        textBoxKolTovara.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center;
+                                        textBoxKolTovara.Name = "KolTov";
+                                        textBoxKolTovara.PreviewKeyDown += (sender, e) =>
+                                        {
+                                            if (e.Key == Key.Enter)
+                                            {
+                                                textPrise.Text = (DbTovar.Price_sht * int.Parse(textBoxKolTovara.Text.Replace(" ₽", ""))).ToString() + " ₽";
+                                                if (int.Parse(textBoxKolTovara.Text) == 0) KorzinaSpisok.Children.Remove(panelKorzonaStroka);
+                                            }
+                                        };
+                                        panelKolRed.Children.Add(textBoxKolTovara);
+
+
+                                        Button buttonPribav = new Button();
+                                        buttonPribav.Width = 45;
+                                        buttonPribav.Height = 28;
+                                        buttonPribav.Content = "+";
+                                        buttonPribav.FontSize = 15;
+                                        buttonPribav.VerticalAlignment = VerticalAlignment.Center;
+                                        buttonPribav.Click += (sender, e) =>
+                                        {
+                                            textBoxKolTovara.Text = (int.Parse(textBoxKolTovara.Text) + 1).ToString();
+                                            textPrise.Text = (DbTovar.Price_sht * int.Parse(textBoxKolTovara.Text.Replace(" ₽", ""))).ToString() + " ₽";
+                                            buttonYmensh.IsEnabled = true;
+                                        };
+                                        panelKolRed.Children.Add(buttonPribav);
+                                        panelKorzonaStroka.Children.Add(panelKolRed);
+
+                                        textPrise.Width = 100;
+                                        textPrise.Name = "Price";
+                                        textPrise.FontSize = 20;
+                                        textPrise.Text = (DbTovar.Price_sht * int.Parse(textBoxKolTovara.Text.Replace(" ₽", ""))).ToString() + " ₽";
+                                        PrisePanel.Children.Add(textPrise);
+                                        PrisePanel.VerticalAlignment = VerticalAlignment.Center;
+                                        PrisePanel.Margin = new Thickness(20, 0, 0, 0);
+                                        panelKorzonaStroka.Children.Add(PrisePanel);
+
+                                        KorzinaSpisok.Children.Add(panelKorzonaStroka);
+
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         private void VuborKategorii_Click(object sender, RoutedEventArgs e)
@@ -173,6 +296,13 @@ namespace UP_Fitnes_Utkin.Windows
                                         stackPanelTovar.Children.Add(image);
 
                                         TextBlock textBlockNameTovar = new TextBlock();
+                                        TextBlock blocIdtov = new TextBlock();
+                                        blocIdtov.Text = item.Category.Name;
+                                        blocIdtov.Name = "Id";
+                                        blocIdtov.Visibility = Visibility.Collapsed;
+                                        stackPanelTovar.Children.Add(blocIdtov);
+
+
                                         textBlockNameTovar.Text = item.Name_tovar;
                                         textBlockNameTovar.FontSize = 18;
                                         stackPanelTovar.Children.Add(textBlockNameTovar);
@@ -209,6 +339,13 @@ namespace UP_Fitnes_Utkin.Windows
                                         stackPanelTovar.Children.Add(image);
 
                                         TextBlock textBlockNameTovar = new TextBlock();
+                                        TextBlock blocIdtov = new TextBlock();
+                                        blocIdtov.Text = item.Id.ToString();
+                                        blocIdtov.Name = "Id";
+                                        blocIdtov.Visibility = Visibility.Collapsed;
+                                        stackPanelTovar.Children.Add(blocIdtov);
+
+
                                         textBlockNameTovar.Text = item.Name_tovar;
                                         textBlockNameTovar.FontSize = 18;
                                         stackPanelTovar.Children.Add(textBlockNameTovar);
@@ -315,6 +452,12 @@ namespace UP_Fitnes_Utkin.Windows
                         stackPanelTovar.Children.Add(image);
 
                         TextBlock textBlockNameTovar = new TextBlock();
+                        TextBlock blocIdtov = new TextBlock();
+                        blocIdtov.Text = item.Id.ToString();
+                        blocIdtov.Name = "Id";
+                        blocIdtov.Visibility = Visibility.Collapsed;
+                        stackPanelTovar.Children.Add(blocIdtov);
+
                         textBlockNameTovar.Text = item.Name_tovar;
                         textBlockNameTovar.FontSize = 18;
                         stackPanelTovar.Children.Add(textBlockNameTovar);
@@ -422,6 +565,11 @@ namespace UP_Fitnes_Utkin.Windows
                         stackPanelTovar.Children.Add(image);
 
                         TextBlock textBlockNameTovar = new TextBlock();
+                        TextBlock blocIdtov = new TextBlock();
+                        blocIdtov.Text = item.Id.ToString();
+                        blocIdtov.Visibility = Visibility.Collapsed;
+                        stackPanelTovar.Children.Add(blocIdtov);
+
                         textBlockNameTovar.Text = item.Name_tovar;
                         textBlockNameTovar.FontSize = 18;
                         stackPanelTovar.Children.Add(textBlockNameTovar);
@@ -462,5 +610,7 @@ namespace UP_Fitnes_Utkin.Windows
             mainWindow.Show();
             this.Close();
         }
+
+
     }
 }
