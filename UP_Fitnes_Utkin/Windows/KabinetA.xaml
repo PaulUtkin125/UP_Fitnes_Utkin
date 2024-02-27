@@ -10,8 +10,8 @@
     <Grid>
         <StackPanel>
             <StackPanel Orientation="Horizontal" Margin="10 10" HorizontalAlignment="Right">
-                <StackPanel Width="500" Margin="0 0 40 0">
-                    <TextBlock Width="490" Text="Здесь могла быть Ваша реклама" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15"/>
+                <StackPanel Width="400" Margin="0 0 40 0">
+                    <TextBlock Width="400" Text="Здесь могла быть Ваша реклама" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="15"/>
                 </StackPanel>
                 <StackPanel Margin="0 0 20 0" Cursor="">
                     <TextBlock Text="Кошелек:" FontSize="20" HorizontalAlignment="Center"/>
@@ -30,6 +30,7 @@
                         <Image Source="C:\Users\П\source\repos\UP_Fitnes_Utkin\UP_Fitnes_Utkin\Image\korzina.png" Width="23" Height="23"/>
                     </Button>
                 </StackPanel>
+                <Button Content="Выйти" FontSize="18" Margin="15 0 0 0" Click="Nazad_Click"/>
             </StackPanel>
             
             <StackPanel Height="3" Background="Gray"/>

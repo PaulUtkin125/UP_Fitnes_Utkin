@@ -113,7 +113,26 @@ namespace UP_Fitnes_Utkin.Windows
 
         private void KoshelPopoln_Click(object sender, RoutedEventArgs e)
         {
+            if (string.IsNullOrEmpty(KoshelInputBox.Text)) return;
+            if (double.Parse(KoshelInputBox.Text.Replace('.', ',')) < 0)
+            {
+                KoshelInputBox.Text = "";
+                MessageBox.Show("Поле не может быть отрицательным!");
+                return;
+            }
 
+            var UserId = _user.ID;
+
+            using (var context = new DbContact())
+            {
+                var user = context.users.Find(UserId);
+                user.Money += double.Parse(KoshelInputBox.Text.Replace('.',','));
+
+                context.SaveChanges();
+
+                Koshelek.Text = user.Money.ToString() + " ₽";
+                KoshelInputBox = "";
+            }
         }
         private void Vubor_Click(object sender, RoutedEventArgs e)
         {
@@ -435,6 +454,13 @@ namespace UP_Fitnes_Utkin.Windows
                 Photo.Source = new BitmapImage(new Uri(openFileDialog.FileName));
                 PhotoFileNeme = openFileDialog.FileName;
             }
+        }
+
+        private void Nazad_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow mainWindow = new MainWindow();
+            mainWindow.Show();
+            this.Close();
         }
     }
 }
