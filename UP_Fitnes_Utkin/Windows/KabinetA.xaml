@@ -33,7 +33,7 @@
             </StackPanel>
             
             <StackPanel Height="3" Background="Gray"/>
-            <StackPanel Orientation="Horizontal" Height="408" Name="KatalogVesi" Visibility="Collapsed">
+            <StackPanel Orientation="Horizontal" Height="408" Name="KatalogVesi" Visibility="Visible">
                 <StackPanel Width="150" Margin="10 0 0 0">
                     <TextBlock Text="Каталог" FontSize="20"/>
 
@@ -88,7 +88,7 @@
                 </StackPanel>
             </StackPanel>
             
-            <StackPanel x:Name="KorzonaVsiy" Orientation="Horizontal" Visibility="Visible">
+            <StackPanel x:Name="KorzonaVsiy" Orientation="Horizontal" Visibility="Collapsed">
                 <Border Width="500" Height="360" Margin="20 10" Background="White" CornerRadius="10">
                     <ScrollViewer>
                         <WrapPanel Name="KorzinaSpisok" Orientation="Vertical" Width="480">

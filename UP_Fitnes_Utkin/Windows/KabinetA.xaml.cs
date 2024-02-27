@@ -34,6 +34,8 @@ namespace UP_Fitnes_Utkin.Windows
     {
         private readonly User? _user = null;
         public string PhotoFileNeme;
+        int counter = 0;
+        double SumKOplate = 0.0;
         public KabinetA(User user)
         {
             InitializeComponent();
@@ -109,7 +111,7 @@ namespace UP_Fitnes_Utkin.Windows
                     button.Content = "В корзину";
                     button.FontSize = 12;
                     button.Width = 100;
-                    button.Click += Vubor_Click;
+                    button.Click += Vubor_Click; /////////////////////////////////////////////////////////////////////
                     stackPanelTovar.Children.Add(button);
 
                     stackPanelTovar.Margin = new Thickness(10, 5, 5, 10) ;
@@ -124,12 +126,13 @@ namespace UP_Fitnes_Utkin.Windows
             KatalogVesi.Visibility = Visibility.Collapsed;
             KorzonaVsiy.Visibility = Visibility.Visible;
 
-            int counter = 0;
+            
             foreach (var item in KorzinaSpisok.Children)
             {
-                if (item is StackPanel) counter++;
+                if (item is StackPanel ty) counter++;
             }
             HintAssist.SetHint(KolTovObsh, $"Товары, {counter} шт.");
+            ItogoOutBlock.Text = SumKOplate.ToString() + " ₽";
         }
 
         private void KoshelPopoln_Click(object sender, RoutedEventArgs e)
@@ -211,8 +214,14 @@ namespace UP_Fitnes_Utkin.Windows
                                         buttonYmensh.Click += (sender, e) =>
                                         {
                                             textBoxKolTovara.Text = (int.Parse(textBoxKolTovara.Text) - 1).ToString();
+                                            SumKOplate -= DbTovar.Price_sht;
+                                            ItogoOutBlock.Text = SumKOplate.ToString() + " ₽";
                                             textPrise.Text = (DbTovar.Price_sht * int.Parse(textBoxKolTovara.Text.Replace(" ₽", ""))).ToString() + " ₽";
                                             if (int.Parse(textBoxKolTovara.Text) == 0) KorzinaSpisok.Children.Remove(panelKorzonaStroka);
+                                            counter--;
+                                            HintAssist.SetHint(KolTovObsh, $"Товары, {counter} шт.");
+
+                                            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                         };
                                         panelKolRed.Children.Add(buttonYmensh);
 
@@ -243,8 +252,13 @@ namespace UP_Fitnes_Utkin.Windows
                                         buttonPribav.Click += (sender, e) =>
                                         {
                                             textBoxKolTovara.Text = (int.Parse(textBoxKolTovara.Text) + 1).ToString();
+                                            SumKOplate += DbTovar.Price_sht;
+                                            ItogoOutBlock.Text = SumKOplate.ToString() + " ₽";
                                             textPrise.Text = (DbTovar.Price_sht * int.Parse(textBoxKolTovara.Text.Replace(" ₽", ""))).ToString() + " ₽";
-                                            buttonYmensh.IsEnabled = true;
+                                            counter++;
+                                            HintAssist.SetHint(KolTovObsh, $"Товары, {counter} шт.");
+
+                                            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                         };
                                         panelKolRed.Children.Add(buttonPribav);
                                         panelKorzonaStroka.Children.Add(panelKolRed);
@@ -257,6 +271,9 @@ namespace UP_Fitnes_Utkin.Windows
                                         PrisePanel.VerticalAlignment = VerticalAlignment.Center;
                                         PrisePanel.Margin = new Thickness(20, 0, 0, 0);
                                         panelKorzonaStroka.Children.Add(PrisePanel);
+
+                                        SumKOplate += DbTovar.Price_sht;
+                                        ItogoOutBlock.Text = SumKOplate.ToString() + " ₽";
 
                                         KorzinaSpisok.Children.Add(panelKorzonaStroka);
 
