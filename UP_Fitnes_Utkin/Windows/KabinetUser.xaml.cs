@@ -23,7 +23,9 @@ namespace UP_Fitnes_Utkin.Windows
         public int counter = 0;
         public double SumKOplate = 0.0;
 
+
         List<int[]> List1 = new List<int[]>();
+
 
         public KabinetUser(User user)
         {
@@ -69,7 +71,10 @@ namespace UP_Fitnes_Utkin.Windows
             VuvodTovarov();
         }
 
+
         public int[] ints1 = new int[2]; // Id, кол-во //
+
+
         public void VuvodTovarov()
         {
             using (var context = new DbContact())
@@ -117,6 +122,7 @@ namespace UP_Fitnes_Utkin.Windows
             }
         }
 
+
         private void Korzina_Click(object sender, RoutedEventArgs e)
         {
             KatalogVesi.Visibility = Visibility.Collapsed;
@@ -132,13 +138,23 @@ namespace UP_Fitnes_Utkin.Windows
             ItogoOutBlock.Text = SumKOplate.ToString() + " ₽";
         }
 
+
         private void KoshelPopoln_Click(object sender, RoutedEventArgs e)
         {
+            foreach (char letter in KoshelInputBox.Text.Replace("-", ""))
+            {
+                if (!char.IsDigit(letter))
+                {
+                    MessageBox.Show("Поле поддерживает только числовые значения", "Ошибка пополнения кошелька");
+                    KoshelInputBox.Text = "";
+                    return;
+                }
+            }
             if (string.IsNullOrEmpty(KoshelInputBox.Text)) return;
             if (double.Parse(KoshelInputBox.Text.Replace('.', ',')) < 0)
             {
                 KoshelInputBox.Text = "";
-                MessageBox.Show("Поле не может быть отрицательным!");
+                MessageBox.Show("Поле не может быть отрицательным!", "Ошибка пополнения кошелька");
                 return;
             }
 
@@ -155,6 +171,8 @@ namespace UP_Fitnes_Utkin.Windows
                 KoshelInputBox.Text = "";
             }
         }
+
+
         private void Vubor_Click(object sender, RoutedEventArgs e)
         {
             Button button = sender as Button;
@@ -333,6 +351,7 @@ namespace UP_Fitnes_Utkin.Windows
             }
         }
 
+
         private void VuborKategorii_Click(object sender, RoutedEventArgs e)
         {
             StackPanel stackPanelKategori = KatalogSpisok.Content as StackPanel;
@@ -447,7 +466,6 @@ namespace UP_Fitnes_Utkin.Windows
             }
         }
 
-        
 
         private void Nazad_Click(object sender, RoutedEventArgs e)
         {
@@ -457,12 +475,14 @@ namespace UP_Fitnes_Utkin.Windows
             KorzonaVsiy.Visibility = Visibility.Collapsed;
         }
 
+
         private void Vuhod_Click(object sender, RoutedEventArgs e)
         {
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
             this.Close();
         }
+
 
         private void Kupit_Click(object sender, RoutedEventArgs e)
         {

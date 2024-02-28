@@ -69,7 +69,6 @@
                     </Border>
                     <Button Content="Назад" FontSize="18" Width="150" Margin="0 20" Click="Nazad_Click"/>
                 </StackPanel>
-
             </StackPanel>
         </StackPanel>
     </Grid>

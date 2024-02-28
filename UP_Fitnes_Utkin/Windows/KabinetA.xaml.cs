@@ -25,7 +25,9 @@ namespace UP_Fitnes_Utkin.Windows
         public int counter = 0;
         public double SumKOplate = 0.0;
 
+
         List<int[]> List1 = new List<int[]>();
+
 
         public KabinetA(User user)
         {
@@ -73,7 +75,10 @@ namespace UP_Fitnes_Utkin.Windows
             VuvodTovarov();
         }
 
+
         public int[] ints1 = new int[2]; // Id, кол-во //
+
+
         public void VuvodTovarov()
         {
             using (var context = new DbContact())
@@ -118,6 +123,7 @@ namespace UP_Fitnes_Utkin.Windows
             }
         }
 
+
         private void Korzina_Click(object sender, RoutedEventArgs e)
         {
             KatalogVesi.Visibility = Visibility.Collapsed;
@@ -133,13 +139,24 @@ namespace UP_Fitnes_Utkin.Windows
             ItogoOutBlock.Text = SumKOplate.ToString() + " ₽";
         }
 
+
         private void KoshelPopoln_Click(object sender, RoutedEventArgs e)
         {
+            foreach (char letter in KoshelInputBox.Text.Replace("-", ""))
+            {
+                if (!char.IsDigit(letter))
+                {
+                    MessageBox.Show("Поле поддерживает только числовые значения", "Ошибка пополнения кошелька");
+                    KoshelInputBox.Text = "";
+                    return;
+                }
+            }
+
             if (string.IsNullOrEmpty(KoshelInputBox.Text)) return;
             if (double.Parse(KoshelInputBox.Text.Replace('.', ',')) < 0)
             {
                 KoshelInputBox.Text = "";
-                MessageBox.Show("Поле не может быть отрицательным!");
+                MessageBox.Show("Поле не может быть отрицательным!", "Ошибка пополнения кошелька");
                 return;
             }
 
@@ -156,6 +173,8 @@ namespace UP_Fitnes_Utkin.Windows
                 KoshelInputBox.Text = "";
             }
         }
+
+
         private void Vubor_Click(object sender, RoutedEventArgs e)
         {
             Button button = sender as Button;
@@ -334,6 +353,7 @@ namespace UP_Fitnes_Utkin.Windows
             }
         }
 
+
         private void VuborKategorii_Click(object sender, RoutedEventArgs e)
         {
             StackPanel stackPanelKategori = KatalogSpisok.Content as StackPanel;
@@ -447,34 +467,53 @@ namespace UP_Fitnes_Utkin.Windows
             }
         }
 
+
         private void VnestiDannue_Click(object sender, RoutedEventArgs e)
         {
             if (boxVub.SelectedIndex == 0)       // товар
             {
                 if (string.IsNullOrEmpty(CategOutputBox.Text))
                 {
-                    MessageBox.Show("Поле 'Категория' должно быть заполнено!", "Предупреждение");
+                    MessageBox.Show("Поле 'Категория' должно быть заполнено!", "Ошибка");
                     return;
                 }
                 if (string.IsNullOrEmpty(CenaNewTovara.Text))
                 {
-                    MessageBox.Show("Поле 'Цена' должно быть заполнено!", "Предупреждение");
+                    MessageBox.Show("Поле 'Цена' должно быть заполнено!", "Ошибка");
                     return;
                 }
                 if (string.IsNullOrEmpty(NameNewTovara.Text))
                 {
-                    MessageBox.Show("Поле 'Название' должно быть заполнено!", "Предупреждение");
+                    MessageBox.Show("Поле 'Название' должно быть заполнено!", "Ошибка");
                     return;
                 }
                 if (string.IsNullOrEmpty(KolNewInputBox.Text))
                 {
-                    MessageBox.Show("Поле 'Кол-во' должно быть заполнено!", "Предупреждение");
+                    MessageBox.Show("Поле 'Кол-во' должно быть заполнено!", "Ошибка");
                     return;
                 }
                 if (PhotoFileNeme is null)
                 {
-                    MessageBox.Show("Фотографии товара не выбрана!", "Предупреждение");
+                    MessageBox.Show("Фотографии товара не выбрана!", "Ошибка");
                     return;
+                }
+                foreach (char s in CenaNewTovara.Text.Replace("-",""))
+                {
+                    if (!char.IsDigit(s)) 
+                    {
+                        MessageBox.Show("Поле поддерживает только числовые значения", "Ошибка установки цены товара");
+                        CenaNewTovara.Text = "";
+                        return;
+                    }  
+                }
+                foreach (char s in KolNewInputBox.Text.Replace("-", ""))
+                {
+                    if (!char.IsDigit(s))
+                    {
+                        MessageBox.Show("Поле поддерживает только числовые значения", "Ошибка установки количества товара");
+                        KolNewInputBox.Text = "";
+                        return;
+                    }
                 }
 
                 string neme = NameNewTovara.Text;
@@ -484,19 +523,19 @@ namespace UP_Fitnes_Utkin.Windows
 
                 if (kol < 1)
                 {
-                    MessageBox.Show("Недопустимое значение поля 'Кол-во'!", "Предупреждение");
+                    MessageBox.Show("Недопустимое значение поля 'Кол-во'!", "Ошибка");
                     return;
                 }
                 if (cena < 0.01)
                 {
-                    MessageBox.Show("Недопустимое значение поля 'Цена'!", "Предупреждение");
+                    MessageBox.Show("Недопустимое значение поля 'Цена'!", "Ошибка");
                     return;
                 }
 
                 using (var context = new DbContact())
                 {
                     var NotTovar = context.tovar.SingleOrDefault(x => x.Name_tovar == neme && x.Category.Name == categor);
-                    if (NotTovar != null) { MessageBox.Show("Такой товар уже существут!", "Предупреждение"); return; }
+                    if (NotTovar != null) { MessageBox.Show("Такой товар уже существут!", "Ошибка"); return; }
 
                     int categID = 0;
                     foreach (var categItem in context.kategorTovaras)
@@ -539,6 +578,7 @@ namespace UP_Fitnes_Utkin.Windows
             }  // категория
             
         }
+
 
         private void boxVub_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -585,6 +625,7 @@ namespace UP_Fitnes_Utkin.Windows
             }   // ничего
         }
 
+
         private void VubratPhoto_Click(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -597,6 +638,7 @@ namespace UP_Fitnes_Utkin.Windows
             }
         }
 
+
         private void Nazad_Click(object sender, RoutedEventArgs e)
         {
             VuvodTovarov();
@@ -605,12 +647,14 @@ namespace UP_Fitnes_Utkin.Windows
             KorzonaVsiy.Visibility = Visibility.Collapsed;
         }
 
+
         private void Vuhod_Click(object sender, RoutedEventArgs e)
         {
             MainWindow mainWindow = new MainWindow();
             mainWindow.Show();
             this.Close();
         }
+
 
         private void Kupit_Click(object sender, RoutedEventArgs e)
         {
