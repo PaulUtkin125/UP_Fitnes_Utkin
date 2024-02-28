@@ -47,7 +47,6 @@ namespace UP_Fitnes_Utkin.Windows
 
             Koshelek.Text = _user.Money.ToString() + " ₽";
 
-
             using (var context = new DbContact())
             {
                 ScrollViewer scrollViewer = KatalogSpisok;
@@ -81,8 +80,16 @@ namespace UP_Fitnes_Utkin.Windows
                     stackPanel.Children.Add(radioButton);
                 }
                 scrollViewer.Content = stackPanel;
+            }
 
-                ScrollViewer scrollViewerTov = SpisTov; 
+            VuvodTovarov();
+        }
+
+        public int[] ints1 = new int[2]; // Id, кол-во //
+        public void VuvodTovarov()
+        {
+            using (var context = new DbContact())
+            {
                 WrapPanel Spisok = SpisokTovarov;
                 foreach (var item in context.tovar)
                 {
@@ -114,21 +121,12 @@ namespace UP_Fitnes_Utkin.Windows
                     button.Content = "В корзину";
                     button.FontSize = 12;
                     button.Width = 100;
-                    button.Click += Vubor_Click; /////////////////////////////////////////////////////////////////////
+                    button.Click += Vubor_Click;
                     stackPanelTovar.Children.Add(button);
 
-                    stackPanelTovar.Margin = new Thickness(10, 5, 5, 10) ;
+                    stackPanelTovar.Margin = new Thickness(10, 5, 5, 10);
                     Spisok.Children.Add(stackPanelTovar);
                 }
-                scrollViewerTov.Content = Spisok;
-            }
-        }
-
-        public void  VuvodTovarov ()
-        {
-            using (var context = new DbContact())
-            {
-                
             }
         }
 
@@ -137,7 +135,8 @@ namespace UP_Fitnes_Utkin.Windows
             KatalogVesi.Visibility = Visibility.Collapsed;
             KorzonaVsiy.Visibility = Visibility.Visible;
 
-            
+            SpisokTovarov.Children.Clear();
+
             foreach (var item in KorzinaSpisok.Children)
             {
                 if (item is StackPanel ty) counter++;
@@ -174,7 +173,7 @@ namespace UP_Fitnes_Utkin.Windows
             Button button = sender as Button;
             if (button != null) 
             {
-                int[] ints1 = new int[2]; // Id, кол-во //
+                
                 StackPanel block = button.Parent as StackPanel;
                 if (block != null) 
                 {
@@ -186,8 +185,6 @@ namespace UP_Fitnes_Utkin.Windows
                             {
                                 if (text.Name == "Id")
                                 {
-                                    
-
                                     int IdTov = int.Parse(text.Text);
                                     TextBox textBoxKolTovara = new TextBox();
                                     TextBlock textPrise = new TextBlock();
@@ -527,43 +524,7 @@ namespace UP_Fitnes_Utkin.Windows
                     context.tovar.Add(NewTovar);
                     context.SaveChanges();
                     MessageBox.Show("Запись добавлена", "Уведомление");
-
-                    WrapPanel Spisok = SpisokTovarov;
-                    foreach (var item in context.tovar)
-                    {
-                        StackPanel stackPanelTovar = new StackPanel();
-                        BitmapImage bitmapImage = new BitmapImage(new Uri(item.Photo));
-                        Image image = new Image();
-                        image.Source = bitmapImage;
-                        image.Width = 100;
-                        image.Height = 100;
-                        stackPanelTovar.Children.Add(image);
-
-                        TextBlock textBlockNameTovar = new TextBlock();
-                        TextBlock blocIdtov = new TextBlock();
-                        blocIdtov.Text = item.Id.ToString();
-                        blocIdtov.Name = "Id";
-                        blocIdtov.Visibility = Visibility.Collapsed;
-                        stackPanelTovar.Children.Add(blocIdtov);
-
-                        textBlockNameTovar.Text = item.Name_tovar;
-                        textBlockNameTovar.FontSize = 18;
-                        stackPanelTovar.Children.Add(textBlockNameTovar);
-                        TextBlock textBlockKolTovara = new TextBlock();
-                        textBlockKolTovara.Text = item.Count_tekyshee.ToString() + " шт.";
-                        textBlockKolTovara.FontSize = 15;
-                        stackPanelTovar.Children.Add(textBlockKolTovara);
-
-                        System.Windows.Controls.Button button = new System.Windows.Controls.Button();
-                        button.Content = "В корзину";
-                        button.FontSize = 12;
-                        button.Width = 100;
-                        button.Click += Vubor_Click;
-                        stackPanelTovar.Children.Add(button);
-
-                        stackPanelTovar.Margin = new Thickness(10, 5, 5, 10);
-                        Spisok.Children.Add(stackPanelTovar);
-                    }
+                    
                 };
 
             }   // товар
@@ -587,12 +548,7 @@ namespace UP_Fitnes_Utkin.Windows
                 }
 
             }  // категория
-            if (boxVub.SelectedIndex == 2)
-            {
-                MessageBox.Show("Элемент для добавления не выбран!", "Предупреждение");
-                return;
-
-            }   // ничего
+            
         }
 
         private void boxVub_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -616,7 +572,6 @@ namespace UP_Fitnes_Utkin.Windows
                 SpisTov.Visibility = Visibility.Collapsed;
                 NewCategor.Visibility = Visibility.Collapsed;
             }   // товар
-
             if (boxVub.SelectedIndex == 1)  // категория
             {
                 NewCategor.Visibility = Visibility.Visible;
@@ -636,47 +591,8 @@ namespace UP_Fitnes_Utkin.Windows
                 SpisTov.Visibility = Visibility.Visible;
                 SpisokTovarov.Visibility= Visibility.Visible;
 
-                using (var context = new DbContact())
-                {
-                    ScrollViewer scrollViewer = KatalogSpisok;
-                    StackPanel stackPanel = new StackPanel();
-
-                    WrapPanel Spisok = SpisokTovarov;
-                    foreach (var item in context.tovar)
-                    {
-                        StackPanel stackPanelTovar = new StackPanel();
-                        BitmapImage bitmapImage = new BitmapImage(new Uri(item.Photo));
-                        Image image = new Image();
-                        image.Source = bitmapImage;
-                        image.Width = 100;
-                        image.Height = 100;
-                        stackPanelTovar.Children.Add(image);
-
-                        TextBlock textBlockNameTovar = new TextBlock();
-                        TextBlock blocIdtov = new TextBlock();
-                        blocIdtov.Text = item.Id.ToString();
-                        blocIdtov.Visibility = Visibility.Collapsed;
-                        stackPanelTovar.Children.Add(blocIdtov);
-
-                        textBlockNameTovar.Text = item.Name_tovar;
-                        textBlockNameTovar.FontSize = 18;
-                        stackPanelTovar.Children.Add(textBlockNameTovar);
-                        TextBlock textBlockKolTovara = new TextBlock();
-                        textBlockKolTovara.Text = item.Count_tekyshee.ToString() + " шт.";
-                        textBlockKolTovara.FontSize = 15;
-                        stackPanelTovar.Children.Add(textBlockKolTovara);
-
-                        System.Windows.Controls.Button button = new System.Windows.Controls.Button();
-                        button.Content = "В корзину";
-                        button.FontSize = 12;
-                        button.Width = 100;
-                        button.Click += Vubor_Click;
-                        stackPanelTovar.Children.Add(button);
-
-                        stackPanelTovar.Margin = new Thickness(10, 5, 5, 10);
-                        Spisok.Children.Add(stackPanelTovar);
-                    }
-                }
+                VuvodTovarov();
+                
             }   // ничего
         }
 
@@ -694,6 +610,8 @@ namespace UP_Fitnes_Utkin.Windows
 
         private void Nazad_Click(object sender, RoutedEventArgs e)
         {
+            VuvodTovarov();
+
             KatalogVesi.Visibility = Visibility.Visible;
             KorzonaVsiy.Visibility = Visibility.Collapsed;
         }
@@ -709,7 +627,7 @@ namespace UP_Fitnes_Utkin.Windows
         {
             double kOplate = double.Parse(ItogoOutBlock.Text.Replace(" ₽", ""));
             double koshelok_ = double.Parse(Koshelek.Text.Replace(" ₽", ""));
-            if (kOplate > koshelok_) 
+            if (kOplate <= koshelok_) 
             {
                 MessageBox.Show("Недостаточно средств", "Ошибка");
                 return;
@@ -724,11 +642,13 @@ namespace UP_Fitnes_Utkin.Windows
                         if (tovarMas[0] == tovar_Sklad.Id)
                         {
                             var tovarDb = context.tovar.Find(tovarMas[0]);
-                            tovarDb.Count_tekyshee -= tovarMas[1];
+                            tovarDb.Count_tekyshee += tovarMas[1];
                             
                         }
                     }
                 }
+                var user_ = context.users.Find(_user.ID);
+                user_.Money -= kOplate;
                 context.SaveChanges();
             }
             List1.Clear();
