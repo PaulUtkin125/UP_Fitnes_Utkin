@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UP_Fitnes_Utkin.Windows"
         mc:Ignorable="d"
-         xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Title="KabinetA" Height="500" Width="800" Background="LightBlue" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="Кабинет" Height="520" Width="800" Background="LightBlue" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <StackPanel>
             <StackPanel Orientation="Horizontal" Margin="10 10" HorizontalAlignment="Right">
@@ -89,7 +89,7 @@
             </StackPanel>
             
             <StackPanel x:Name="KorzonaVsiy" Orientation="Horizontal" Visibility="Collapsed">
-                <Border Width="500" Height="360" Margin="20 10" Background="White" CornerRadius="10">
+                <Border Width="500" Height="380" Margin="20 10" Background="White" CornerRadius="10">
                     <ScrollViewer>
                         <WrapPanel Name="KorzinaSpisok" Orientation="Vertical" Width="480">
                             <TextBlock Text="Корзина" FontSize="20" Margin="15 5 0 20"/>

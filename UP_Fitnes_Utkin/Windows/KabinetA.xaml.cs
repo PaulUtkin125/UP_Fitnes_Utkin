@@ -1,27 +1,15 @@
 ﻿using MaterialDesignThemes.Wpf;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Forms;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using UP_Fitnes_Utkin.Data;
 using UP_Fitnes_Utkin.Model;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using Button = System.Windows.Controls.Button;
-using KeyEventArgs = System.Windows.Forms.KeyEventArgs;
 using MessageBox = System.Windows.Forms.MessageBox;
 using Orientation = System.Windows.Controls.Orientation;
-using Panel = System.Windows.Forms.Panel;
 using RadioButton = System.Windows.Controls.RadioButton;
 using TextBox = System.Windows.Controls.TextBox;
 
@@ -365,7 +353,8 @@ namespace UP_Fitnes_Utkin.Windows
                                 if (content != "Все товары")
                                 {
                                     var SearchTovar = context.tovar
-                                      .Where(x => x.Category.Name == content);
+                                      .Where(x => x.Category.Name == content)
+                                      .Include(x => x.Category);
 
                                     SpisokTovarov.Children.Clear();
                                     WrapPanel Spisok = SpisokTovarov;
@@ -381,7 +370,7 @@ namespace UP_Fitnes_Utkin.Windows
 
                                         TextBlock textBlockNameTovar = new TextBlock();
                                         TextBlock blocIdtov = new TextBlock();
-                                        blocIdtov.Text = item.Category.Name;
+                                        blocIdtov.Text = item.Id.ToString();
                                         blocIdtov.Name = "Id";
                                         blocIdtov.Visibility = Visibility.Collapsed;
                                         stackPanelTovar.Children.Add(blocIdtov);
@@ -627,7 +616,7 @@ namespace UP_Fitnes_Utkin.Windows
         {
             double kOplate = double.Parse(ItogoOutBlock.Text.Replace(" ₽", ""));
             double koshelok_ = double.Parse(Koshelek.Text.Replace(" ₽", ""));
-            if (kOplate <= koshelok_) 
+            if (kOplate >= koshelok_) 
             {
                 MessageBox.Show("Недостаточно средств", "Ошибка");
                 return;
@@ -643,7 +632,6 @@ namespace UP_Fitnes_Utkin.Windows
                         {
                             var tovarDb = context.tovar.Find(tovarMas[0]);
                             tovarDb.Count_tekyshee += tovarMas[1];
-                            
                         }
                     }
                 }

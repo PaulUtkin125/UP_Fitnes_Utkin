@@ -5,8 +5,72 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:UP_Fitnes_Utkin.Windows"
         mc:Ignorable="d"
-        Title="KabinetUser" Height="450" Width="800">
+        xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Title="Кабинет" Height="520" Width="800" Background="LightBlue" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
-        
+        <StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="10 10" HorizontalAlignment="Right">
+                <Button Content="Выйти" FontSize="18" Margin="15 0 0 0" Click="Vuhod_Click"/>
+                <StackPanel Width="400" Margin="0 0 40 0"/>
+                <StackPanel Margin="0 0 20 0" Cursor="">
+                    <TextBlock Text="Кошелек:" FontSize="20" HorizontalAlignment="Center"/>
+                    <TextBlock FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="35 0 0 0" Width="100" Name="Koshelek"/>
+                    <StackPanel.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Пополнить" Click="KoshelPopoln_Click">
+                                <TextBox Width="100" Name="KoshelInputBox"/>
+                            </MenuItem>
+                        </ContextMenu>
+                    </StackPanel.ContextMenu>
+                </StackPanel>
+
+                <StackPanel Orientation="Horizontal" Margin="10 1" HorizontalAlignment="Right" VerticalAlignment="Top" Cursor="">
+                    <Button Width="55" Height="50" Cursor="Hand" Click="Korzina_Click">
+                        <Image Source="C:\Users\П\source\repos\UP_Fitnes_Utkin\UP_Fitnes_Utkin\Image\korzina.png" Width="23" Height="23"/>
+                    </Button>
+                </StackPanel>
+
+            </StackPanel>
+
+            <StackPanel Height="3" Background="Gray"/>
+            <StackPanel Orientation="Horizontal" Height="408" Name="KatalogVesi" Visibility="Visible">
+                <StackPanel Width="150" Margin="10 0 0 0">
+                    <TextBlock Text="Каталог" FontSize="20"/>
+
+                    <ScrollViewer x:Name="KatalogSpisok" Height="230"/>
+                </StackPanel>
+
+                <StackPanel Width="3" Background="Gray"/>
+                <ScrollViewer x:Name="SpisTov" Width="635" Height="400">
+                    <WrapPanel Width="630" Orientation="Horizontal" x:Name="SpisokTovarov" Visibility="Visible"/>
+                </ScrollViewer>
+            </StackPanel>
+
+            <StackPanel x:Name="KorzonaVsiy" Orientation="Horizontal" Visibility="Collapsed">
+                <Border Width="500" Height="380" Margin="20 10" Background="White" CornerRadius="10">
+                    <ScrollViewer>
+                        <WrapPanel Name="KorzinaSpisok" Orientation="Vertical" Width="480">
+                            <TextBlock Text="Корзина" FontSize="20" Margin="15 5 0 20"/>
+                        </WrapPanel>
+                    </ScrollViewer>
+                </Border>
+                <StackPanel>
+                    <Border Background="White" Width="200" Height="150" Margin="10" VerticalAlignment="Top" CornerRadius="15">
+                        <StackPanel Margin="10 20 0 0">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox md:HintAssist.Hint="Товары, 0 шт." FontSize="15"  Width="150" Name="KolTovObsh" IsReadOnly="True"/>
+                            </StackPanel>
+                            <StackPanel Margin="0 20 0 0" Orientation="Horizontal">
+                                <TextBlock Text="ИТОГО:" FontSize="18" />
+                                <TextBlock Width="70"  Text="0 ₽" TextAlignment="Right" Name="ItogoOutBlock" FontSize="18" Margin="30 0 0 0"/>
+                            </StackPanel>
+                            <Button Content="Оплатить" FontSize="18" Click="Kupit_Click" Margin="0 15" Width="150"/>
+                        </StackPanel>
+                    </Border>
+                    <Button Content="Назад" FontSize="18" Width="150" Margin="0 20" Click="Nazad_Click"/>
+                </StackPanel>
+
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Window>
