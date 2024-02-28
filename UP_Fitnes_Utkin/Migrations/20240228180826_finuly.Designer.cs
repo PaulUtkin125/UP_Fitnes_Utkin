@@ -11,8 +11,8 @@ using UP_Fitnes_Utkin.Data;
 namespace UP_Fitnes_Utkin.Migrations
 {
     [DbContext(typeof(DbContact))]
-    [Migration("20240226091020_first")]
-    partial class first
+    [Migration("20240228180826_finuly")]
+    partial class finuly
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -55,7 +55,7 @@ namespace UP_Fitnes_Utkin.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Rol");
+                    b.ToTable("rols");
                 });
 
             modelBuilder.Entity("UP_Fitnes_Utkin.Model.Tovar_Sklad", b =>

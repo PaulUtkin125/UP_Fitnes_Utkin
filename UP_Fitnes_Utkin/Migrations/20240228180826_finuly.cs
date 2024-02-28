@@ -5,7 +5,7 @@
 namespace UP_Fitnes_Utkin.Migrations
 {
     /// <inheritdoc />
-    public partial class first : Migration
+    public partial class finuly : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -24,7 +24,7 @@ namespace UP_Fitnes_Utkin.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Rol",
+                name: "rols",
                 columns: table => new
                 {
                     ID = table.Column<int>(type: "int", nullable: false)
@@ -33,7 +33,7 @@ namespace UP_Fitnes_Utkin.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Rol", x => x.ID);
+                    table.PrimaryKey("PK_rols", x => x.ID);
                 });
 
             migrationBuilder.CreateTable(
@@ -74,9 +74,9 @@ namespace UP_Fitnes_Utkin.Migrations
                 {
                     table.PrimaryKey("PK_users", x => x.ID);
                     table.ForeignKey(
-                        name: "FK_users_Rol_RoleId",
+                        name: "FK_users_rols_RoleId",
                         column: x => x.RoleId,
-                        principalTable: "Rol",
+                        principalTable: "rols",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -105,7 +105,7 @@ namespace UP_Fitnes_Utkin.Migrations
                 name: "kategorTovaras");
 
             migrationBuilder.DropTable(
-                name: "Rol");
+                name: "rols");
         }
     }
 }

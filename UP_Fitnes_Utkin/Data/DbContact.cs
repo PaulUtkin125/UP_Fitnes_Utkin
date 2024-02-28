@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic.ApplicationServices;
 using UP_Fitnes_Utkin.Model;
 
 namespace UP_Fitnes_Utkin.Data
@@ -6,16 +7,17 @@ namespace UP_Fitnes_Utkin.Data
     internal class DbContact : DbContext
     {
 
-        public DbSet<User> users { get; set; }
+        public DbSet<Model.User> users { get; set; }
         public DbSet<Tovar_Sklad> tovar { get; set; }
         public DbSet<KategorTovara> kategorTovaras { get; set; }
+        public DbSet<Rol> rols { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=FitnesShopeDb;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
         }
         protected override void OnModelCreating(ModelBuilder md)
         {
-            md.Entity<User>()
+            md.Entity<Model.User>()
                 .HasOne(x => x.Role)
                 .WithMany()
                 .HasForeignKey(x => x.RoleId);
@@ -24,6 +26,8 @@ namespace UP_Fitnes_Utkin.Data
                 .HasOne(x => x.Category)
                 .WithMany()
                 .HasForeignKey(x => x.CategID);
+
+            
         }
     }
 }

@@ -12,9 +12,9 @@
             <StackPanel Orientation="Horizontal" Margin="10 10" HorizontalAlignment="Right">
                 <Button Content="Выйти" FontSize="18" Margin="15 0 0 0" Click="Vuhod_Click"/>
                 <StackPanel Width="400" Margin="0 0 40 0"/>
-                <StackPanel Margin="0 0 20 0" Cursor="">
+                <StackPanel Margin="35 0 20 0" Cursor="">
                     <TextBlock Text="Кошелек:" FontSize="20" HorizontalAlignment="Center"/>
-                    <TextBlock FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="35 0 0 0" Width="100" Name="Koshelek"/>
+                    <TextBlock FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Right" Width="100" Name="Koshelek"/>
                     <StackPanel.ContextMenu>
                         <ContextMenu>
                             <MenuItem Header="Пополнить" Click="KoshelPopoln_Click">

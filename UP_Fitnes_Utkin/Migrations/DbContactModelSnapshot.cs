@@ -52,7 +52,7 @@ namespace UP_Fitnes_Utkin.Migrations
 
                     b.HasKey("ID");
 
-                    b.ToTable("Rol");
+                    b.ToTable("rols");
                 });
 
             modelBuilder.Entity("UP_Fitnes_Utkin.Model.Tovar_Sklad", b =>

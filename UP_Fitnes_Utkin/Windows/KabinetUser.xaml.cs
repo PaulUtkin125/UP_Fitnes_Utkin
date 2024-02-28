@@ -102,11 +102,20 @@ namespace UP_Fitnes_Utkin.Windows
 
                         textBlockNameTovar.Text = item.Name_tovar;
                         textBlockNameTovar.FontSize = 18;
+                        textBlockNameTovar.Width = 100;//
+                        textBlockNameTovar.Height = 50;//
+                        textBlockNameTovar.TextWrapping = TextWrapping.Wrap;//
                         stackPanelTovar.Children.Add(textBlockNameTovar);
                         TextBlock textBlockKolTovara = new TextBlock();
                         textBlockKolTovara.Text = item.Count_tekyshee.ToString() + " шт.";
                         textBlockKolTovara.FontSize = 15;
+                        textBlockKolTovara.Visibility = Visibility.Collapsed;//
                         stackPanelTovar.Children.Add(textBlockKolTovara);
+
+                        TextBlock blockPriseSht = new TextBlock();//
+                        blockPriseSht.Text = item.Price_sht.ToString() + " ₽";//
+                        blockPriseSht.FontSize = 15;//
+                        stackPanelTovar.Children.Add(blockPriseSht);//
 
                         System.Windows.Controls.Button button = new System.Windows.Controls.Button();
                         button.Content = "В корзину";
@@ -130,6 +139,7 @@ namespace UP_Fitnes_Utkin.Windows
 
             SpisokTovarov.Children.Clear();
 
+            counter = 0;
             foreach (var item in KorzinaSpisok.Children)
             {
                 if (item is StackPanel ty) counter++;
@@ -273,11 +283,12 @@ namespace UP_Fitnes_Utkin.Windows
                                         textBoxKolTovara.VerticalAlignment = VerticalAlignment.Center;
                                         textBoxKolTovara.HorizontalContentAlignment = System.Windows.HorizontalAlignment.Center;
                                         textBoxKolTovara.Name = "KolTov";
+                                        textBoxKolTovara.IsReadOnly = true;
                                         textBoxKolTovara.PreviewKeyDown += (sender, e) =>
                                         {
-                                            int kolTov = int.Parse(textBoxKolTovara.Text);
                                             if (e.Key == Key.Enter)
                                             {
+                                                int kolTov = int.Parse(textBoxKolTovara.Text);
                                                 textPrise.Text = (DbTovar.Price_sht * kolTov).ToString() + " ₽";
                                                 if (kolTov == 0) KorzinaSpisok.Children.Remove(panelKorzonaStroka);
 
@@ -396,11 +407,21 @@ namespace UP_Fitnes_Utkin.Windows
 
                                         textBlockNameTovar.Text = item.Name_tovar;
                                         textBlockNameTovar.FontSize = 18;
+                                        textBlockNameTovar.Width = 100;//
+                                        textBlockNameTovar.Height = 50;//
+                                        textBlockNameTovar.TextWrapping = TextWrapping.Wrap;//
                                         stackPanelTovar.Children.Add(textBlockNameTovar);
+
                                         TextBlock textBlockKolTovara = new TextBlock();
                                         textBlockKolTovara.Text = item.Count_tekyshee.ToString() + " шт.";
                                         textBlockKolTovara.FontSize = 15;
+                                        textBlockKolTovara.Visibility = Visibility.Collapsed;//
                                         stackPanelTovar.Children.Add(textBlockKolTovara);
+
+                                        TextBlock blockPriseSht = new TextBlock();//
+                                        blockPriseSht.Text = item.Price_sht.ToString() + " ₽";//
+                                        blockPriseSht.FontSize = 15;//
+                                        stackPanelTovar.Children.Add(blockPriseSht);
 
                                         System.Windows.Controls.Button button = new System.Windows.Controls.Button();
                                         button.Content = "В корзину";
@@ -441,11 +462,21 @@ namespace UP_Fitnes_Utkin.Windows
 
                                         textBlockNameTovar.Text = item.Name_tovar;
                                         textBlockNameTovar.FontSize = 18;
+                                        textBlockNameTovar.Width = 100;//
+                                        textBlockNameTovar.Height = 50;//
+                                        textBlockNameTovar.TextWrapping = TextWrapping.Wrap;//
                                         stackPanelTovar.Children.Add(textBlockNameTovar);
+
                                         TextBlock textBlockKolTovara = new TextBlock();
                                         textBlockKolTovara.Text = item.Count_tekyshee.ToString() + " шт.";
                                         textBlockKolTovara.FontSize = 15;
+                                        textBlockKolTovara.Visibility = Visibility.Collapsed;
                                         stackPanelTovar.Children.Add(textBlockKolTovara);
+
+                                        TextBlock blockPriseSht = new TextBlock();//
+                                        blockPriseSht.Text = item.Price_sht.ToString() + " ₽";//
+                                        blockPriseSht.FontSize = 15;//
+                                        stackPanelTovar.Children.Add(blockPriseSht);//
 
                                         System.Windows.Controls.Button button = new System.Windows.Controls.Button();
                                         button.Content = "В корзину";
