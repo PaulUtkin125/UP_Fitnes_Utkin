@@ -34,8 +34,11 @@ namespace UP_Fitnes_Utkin.Windows
     {
         private readonly User? _user = null;
         public string PhotoFileNeme;
-        int counter = 0;
-        double SumKOplate = 0.0;
+        public int counter = 0;
+        public double SumKOplate = 0.0;
+
+        List<int[]> List1 = new List<int[]>();
+
         public KabinetA(User user)
         {
             InitializeComponent();
@@ -121,6 +124,14 @@ namespace UP_Fitnes_Utkin.Windows
             }
         }
 
+        public void  VuvodTovarov ()
+        {
+            using (var context = new DbContact())
+            {
+                
+            }
+        }
+
         private void Korzina_Click(object sender, RoutedEventArgs e)
         {
             KatalogVesi.Visibility = Visibility.Collapsed;
@@ -162,7 +173,8 @@ namespace UP_Fitnes_Utkin.Windows
         {
             Button button = sender as Button;
             if (button != null) 
-            { 
+            {
+                int[] ints1 = new int[2]; // Id, кол-во //
                 StackPanel block = button.Parent as StackPanel;
                 if (block != null) 
                 {
@@ -174,10 +186,13 @@ namespace UP_Fitnes_Utkin.Windows
                             {
                                 if (text.Name == "Id")
                                 {
+                                    
+
                                     int IdTov = int.Parse(text.Text);
                                     TextBox textBoxKolTovara = new TextBox();
                                     TextBlock textPrise = new TextBlock();
-                                    
+                                    ints1[0] = IdTov;
+
                                     using (var context = new DbContact())
                                     {
                                         var DbTovar = context.tovar.Find(IdTov);
@@ -187,6 +202,12 @@ namespace UP_Fitnes_Utkin.Windows
                                         StackPanel PrisePanel = new StackPanel();
                                         panelKorzonaStroka.Orientation = Orientation.Horizontal;
                                         panelKolRed.Orientation = Orientation.Horizontal;
+
+                                        TextBlock textId = new TextBlock();
+                                        textId.Name = "Id";
+                                        textId.Text = IdTov.ToString();
+                                        textId.Visibility = Visibility.Collapsed;
+                                        panelKorzonaStroka.Children.Add(textId);
 
                                         BitmapImage bitmapImage = new BitmapImage(new Uri(DbTovar.Photo));
                                         Image image1 = new Image();
@@ -217,10 +238,28 @@ namespace UP_Fitnes_Utkin.Windows
                                             SumKOplate -= DbTovar.Price_sht;
                                             ItogoOutBlock.Text = SumKOplate.ToString() + " ₽";
                                             textPrise.Text = (DbTovar.Price_sht * int.Parse(textBoxKolTovara.Text.Replace(" ₽", ""))).ToString() + " ₽";
-                                            if (int.Parse(textBoxKolTovara.Text) == 0) KorzinaSpisok.Children.Remove(panelKorzonaStroka);
+                                            foreach (var mas in ints1)
+                                                if (int.Parse(textBoxKolTovara.Text) == 0) 
+                                                { 
+                                                    KorzinaSpisok.Children.Remove(panelKorzonaStroka);
+                                                    List1.Remove(ints1);
+                                                }
+                                            
                                             counter--;
                                             HintAssist.SetHint(KolTovObsh, $"Товары, {counter} шт.");
 
+                                            
+                                            foreach (var item in List1)
+                                            {
+                                                if (item[0] == int.Parse(textId.Text))
+                                                {
+                                                    if ((item[1]--) <= 0)
+                                                    {
+                                                        List1.Remove(item);
+                                                    }
+                                                    else item[1]--;
+                                                }
+                                            }
                                             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                         };
                                         panelKolRed.Children.Add(buttonYmensh);
@@ -234,12 +273,27 @@ namespace UP_Fitnes_Utkin.Windows
                                         textBoxKolTovara.Name = "KolTov";
                                         textBoxKolTovara.PreviewKeyDown += (sender, e) =>
                                         {
+                                            int kolTov = int.Parse(textBoxKolTovara.Text);
                                             if (e.Key == Key.Enter)
                                             {
-                                                textPrise.Text = (DbTovar.Price_sht * int.Parse(textBoxKolTovara.Text.Replace(" ₽", ""))).ToString() + " ₽";
-                                                if (int.Parse(textBoxKolTovara.Text) == 0) KorzinaSpisok.Children.Remove(panelKorzonaStroka);
+                                                textPrise.Text = (DbTovar.Price_sht * kolTov).ToString() + " ₽";
+                                                if (kolTov == 0) KorzinaSpisok.Children.Remove(panelKorzonaStroka);
+
+                                                foreach (var item in List1)
+                                                {
+                                                    if (item[0] == int.Parse(textId.Text))
+                                                    {
+                                                        if ((item[1] + kolTov) <= 0)
+                                                        {
+                                                            List1.Remove(item);
+                                                        }
+                                                        else item[1] = kolTov;
+                                                    }
+                                                }
                                             }
                                         };
+                                        ints1[1] = 1;
+                                        List1.Add(ints1);
                                         panelKolRed.Children.Add(textBoxKolTovara);
 
 
@@ -257,6 +311,15 @@ namespace UP_Fitnes_Utkin.Windows
                                             textPrise.Text = (DbTovar.Price_sht * int.Parse(textBoxKolTovara.Text.Replace(" ₽", ""))).ToString() + " ₽";
                                             counter++;
                                             HintAssist.SetHint(KolTovObsh, $"Товары, {counter} шт.");
+
+                                            foreach (var item in List1)
+                                            {
+                                                if (item[0] == int.Parse(textId.Text)) 
+                                                {
+                                                    item[1]++; 
+                                                }
+                                               
+                                            }
 
                                             /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
                                         };
@@ -369,6 +432,7 @@ namespace UP_Fitnes_Utkin.Windows
                                         blocIdtov.Visibility = Visibility.Collapsed;
                                         stackPanelTovar.Children.Add(blocIdtov);
 
+                                        
 
                                         textBlockNameTovar.Text = item.Name_tovar;
                                         textBlockNameTovar.FontSize = 18;
@@ -643,7 +707,45 @@ namespace UP_Fitnes_Utkin.Windows
 
         private void Kupit_Click(object sender, RoutedEventArgs e)
         {
+            double kOplate = double.Parse(ItogoOutBlock.Text.Replace(" ₽", ""));
+            double koshelok_ = double.Parse(Koshelek.Text.Replace(" ₽", ""));
+            if (kOplate > koshelok_) 
+            {
+                MessageBox.Show("Недостаточно средств", "Ошибка");
+                return;
+            }
 
+            using (var context = new DbContact())
+            {
+                foreach (var tovarMas in List1)
+                {
+                    foreach (var tovar_Sklad in context.tovar)
+                    {
+                        if (tovarMas[0] == tovar_Sklad.Id)
+                        {
+                            var tovarDb = context.tovar.Find(tovarMas[0]);
+                            tovarDb.Count_tekyshee -= tovarMas[1];
+                            
+                        }
+                    }
+                }
+                context.SaveChanges();
+            }
+            List1.Clear();
+            KorzinaSpisok.Children.Clear();
+            koshelok_ -= kOplate;
+            Koshelek.Text =koshelok_ + " ₽";
+
+            ItogoOutBlock.Text = "0 ₽";
+            HintAssist.SetHint(KolTovObsh, "Товары, 0 шт.");
+
+
+            TextBlock blockKorzina = new TextBlock();
+            blockKorzina.Text = "Корзина";
+            blockKorzina.FontSize = 20;
+            blockKorzina.Margin = new Thickness(15, 5, 0, 20);
+            WrapPanel wrapPanel = FindName("KorzinaSpisok") as WrapPanel;
+            wrapPanel.Children.Add(blockKorzina);
         }
     }
 }
